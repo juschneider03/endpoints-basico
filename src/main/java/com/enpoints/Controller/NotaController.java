@@ -1,13 +1,12 @@
 package com.enpoints.Controller;
 
+import com.enpoints.dto.NotaDTO;
 import com.enpoints.service.NotaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class NotaController {
@@ -21,12 +20,17 @@ public class NotaController {
     }
 
     @PostMapping(value = "/calcular-media")
-    public double calcularMedia(ArrayList notas){
+    public double calcularMedia(@RequestBody ArrayList<Integer> notas){
         return notaService.calcularMedia(notas);
     }
 
-//    @PostMapping(value = "/converter")
-//    public double converterNotas(){
-//
-//    }
+    @PostMapping(value = "/converter")
+    public List converterNotas(@RequestBody ArrayList<Integer> notas){
+        return notaService.converterNotas(notas);
+    }
+
+    @PostMapping(value = "/limitar")
+    public List<NotaDTO> limitarNotas(@RequestBody List<NotaDTO> notas,@RequestParam int limite){
+        return notaService.limitarNotas(notas, limite);
+    }
 }
